@@ -1,79 +1,172 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Imported Fonts */
+@font-face {
+  font-family: Canterbury;
+  src: url(./assets/fonts/Canterbury.ttf);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+@font-face {
+  font-family: Georgia;
+  src: url(./assets/fonts/georgia.ttf);
 }
 
-body {
-  margin: 0;
+@font-face {
+  font-family: Georgia;
+  src: url(./assets/fonts/georgiab.ttf);
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: Helvetica Neue;
+  src: url(./assets/fonts/HelveticaNeueLight.otf);
+}
+
+@font-face {
+  font-family: Helvetica Neue;
+  src: url(./assets/fonts/HelveticaNeueMedium.otf);
+  font-weight: bold;
+}
+
+.header-section {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.curr-date-section {
+  display: flex;
+  flex-direction: column;
 }
 
-.card {
-  padding: 2em;
+#curr-date {
+  font-family: "Helvetica Neue";
+  font-weight: bold;
+  color: black;
 }
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* For article and column formatting */
+.articles-section {
+  display: grid;
+  gap: 1.5px;
+  align-items: stretch;
+  padding: 0.5em;
+}
+
+.articles-section img {
+  display: block;
+  width: 80%;
+  height: auto;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  border-right: 2px solid #d9d9d9;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: auto;
+  align-items: center;
+}
+
+.column:last-child {
+  border: none;
+}
+
+/* Mobile View */
+@media only screen and (max-width: 768px) {
+  #curr-date {
+    font-size: 12px;
+  }
+
+  .articles-section {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  header h1 {
+    font-size: 30px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  .column {
+    border: none;
+  }
+}
+
+/* Tablet View */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  #curr-date {
+    font-size: 14px;
+  }
+
+  .articles-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  header h1 {
+    font-size: 50px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  .column:nth-child(2) {
+    border: none;
+  }
+  .column:last-child {
+    border-right: 2px solid #d9d9d9;
+  }
+}
+
+/* Desktop View */
+@media only screen and (min-width: 1024px) {
+  #curr-date {
+    font-size: 16px;
+  }
+  
+  .articles-section {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  header h1 {
+    font-size: 70px;
+  }
+
+  h2 {
+    font-size: 36px;
+  }
+}
+
+header {
+  border-bottom: 2px solid #d9d9d9;
+  margin-bottom: 2px;
+}
+
+header h1 {
+  font-family: "Canterbury";
   text-align: center;
+  margin-bottom: 20px;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+article {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  border-bottom: 2px solid #dfdfdf;
+  padding-bottom: 10px;
+  min-height: 500px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+h2 {
+  font-family: "Georgia", Times, serif;
+  width: 80%;
+}
+
+p {
+  font-family: "Times New Roman";
+  color: #5a5a5a;
+  width: 80%;
 }
