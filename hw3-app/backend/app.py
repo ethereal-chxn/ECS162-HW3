@@ -29,6 +29,29 @@ def serve_frontend(path=''):
 def test_mongo():
     return jsonify({"collections": db.list_collection_names()})
 
+# comments CRUD (Create Read Update Delete) routes
+# ---
+
+# Get all the comments in the database
+@app.route("/api/commments/get")
+def get_comments():
+    return jsonify(db["comments"])
+
+# Adds a comment to database 
+@app.route("/api/comments/post")
+def post_comment():
+    pass
+
+# Edits comment to say it is deleted
+@app.route("/api/comments/delete")
+def delete_comment():
+    pass
+
+# Adds reply to comment (PUT)
+@app.route("/api/comments/put-reply")
+def put_reply_in_comment():
+    pass
+
 if __name__ == '__main__':
     debug_mode = os.getenv('FLASK_ENV') != 'production'
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8000)),debug=debug_mode)

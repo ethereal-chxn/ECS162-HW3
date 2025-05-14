@@ -71,6 +71,15 @@
   border: none;
 }
 
+.comment-section {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.comment-section h2 {
+  font-family: "Helvetica Neue";
+}
+
 /* Mobile View */
 @media only screen and (max-width: 768px) {
   #curr-date {

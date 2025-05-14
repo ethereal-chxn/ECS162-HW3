@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import Column from "./components/Column.svelte";
+  import CommentSection from "./components/CommentSection.svelte";
 
   let apiKey = "";
   let url = "";
@@ -11,7 +12,6 @@
       const res = await fetch("/api/key");
       const data = await res.json();
       apiKey = data.apiKey;
-      console.log(apiKey);
       url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=(Sacramento,Davis)%sort=newest&api-key=${apiKey}`;
     } catch (error) {
       console.error("Failed to fetch API key:", error);
@@ -85,9 +85,12 @@
     </section>
   </header>
 
-  <main class="articles-section">
-    <Column articles={articles.slice(0, 2)} />
-    <Column articles={articles.slice(2, 4)} />
-    <Column articles={articles.slice(4, 6)} />
+  <main>
+    <section class="articles-section">
+      <Column articles={articles.slice(0, 2)} />
+      <Column articles={articles.slice(2, 4)} />
+      <Column articles={articles.slice(4, 6)} />
+    </section>
+    <CommentSection />
   </main>
 </main>
