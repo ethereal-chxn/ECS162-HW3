@@ -17,8 +17,8 @@ db.createCollection('comments')
 db.comments.insertOne({
   id: '0',
   author: '',
-  body: '', //content of comment
-  replies: []
+  responseTo: '',
+  body: '' //content of comment
 })
 
 //Insert many commments
@@ -60,3 +60,6 @@ db.comments.updateOne(
 
 // update fields with $currentDate, $inc, $rename, $set, $unset
 // update arrays with $addToSet, $pop, $pull, $push
+
+// Create articles collection
+db.createCollection('articles')
