@@ -4,9 +4,20 @@
   import CommentSection from "./components/CommentSection.svelte";
   import AccountButton from "./components/AccountButton.svelte";
 
-  let apiKey = "";
-  let url = "";
-  let articles: any[] = [];
+  let apiKey = $state("");
+  let url = $state("");
+  let articles: any[] = $state([]);
+  let isShowingComments = $state(false);
+  let isLoggedIn = $state(false);
+
+  function toggleCommentsTab() {
+    isShowingComments = !isShowingComments
+  }
+
+  async function onLoginPressed() {
+    window.location.href = "http://localhost:8000/login";
+    isLoggedIn = true;
+  }
 
   onMount(async () => {
     try {
@@ -18,7 +29,7 @@
       console.error("Failed to fetch API key:", error);
     }
 
-    fetch(url)
+    await fetch(url)
       .then((response) => response.json())
       .then((data) => {
         // console.log(data);
@@ -74,16 +85,24 @@
       <!--
       Dynamic Current Date Display
       -->
-      <p id="curr-date">
-        {currDay +
-          ", " +
-          currMonth +
-          " " +
-          currDate.getDate() +
-          ", " +
-          currDate.getFullYear()}
-      </p>
-      <AccountButton/>
+      <div id="date-and-account">
+        <p id="curr-date">
+          {currDay +
+            ", " +
+            currMonth +
+            " " +
+            currDate.getDate() +
+            ", " +
+            currDate.getFullYear()}
+        </p>
+        <div id="account">
+          {#if isLoggedIn}
+            <p>Account</p>
+          {:else}
+            <AccountButton clickHandler={onLoginPressed}/>
+          {/if}
+      </div>
+    </div>
     </section>
   </header>
 

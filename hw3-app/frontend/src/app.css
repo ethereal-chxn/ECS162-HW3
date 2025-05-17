@@ -31,9 +31,9 @@
   flex-direction: column;
 }
 
-.curr-date-section {
-  display: flex;
-  flex-direction: column;
+#date-and-account {
+  display:flex;
+  flex-direction: row;
 }
 
 #curr-date {

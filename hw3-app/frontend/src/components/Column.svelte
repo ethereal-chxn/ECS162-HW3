@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="js">
   import Article from "./Article.svelte";
 
   let { articles } = $props();
