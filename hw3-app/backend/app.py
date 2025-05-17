@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for, session, jsonify
 from authlib.integrations.flask_client import OAuth
 from authlib.common.security import generate_token
+from pymongo import MongoClient
 import os
 
 app = Flask(__name__)
@@ -24,6 +25,10 @@ oauth.register(
     device_authorization_endpoint="http://dex:5556/device/code",
     client_kwargs={'scope': 'openid email profile'}
 )
+
+mongo_uri = os.getenv("MONGO_URI")
+mongo = MongoClient(mongo_uri)
+db = mongo.get_default_database()
 
 @app.route('/')
 def home():
@@ -56,23 +61,23 @@ def logout():
     session.clear()
     return redirect('/')
 
-# Get all the comments in the database
-@app.route("/api/commments", method=['GET'])
+#Get all the comments in the database
+@app.route("/api/commments", methods=['GET'])
 def get_comments():
     return jsonify(db["comments"])
 
 # Adds a comment to database 
-@app.route("/api/comments", method=['POST'])
+@app.route("/api/comments", methods=['POST'])
 def post_comment():
     pass
 
 # Edits comment to say it is deleted
-@app.route("/api/comments/<id>", method=['DELETE'])
+@app.route("/api/comments/<id>", methods=['DELETE'])
 def delete_comment():
     pass
 
 # Adds reply to comment (PUT)
-@app.route("/api/comments/<id>", method=['PUT'])
+@app.route("/api/comments/<id>", methods=['PUT'])
 def put_reply_in_comment():
     pass
 
