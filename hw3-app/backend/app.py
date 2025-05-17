@@ -14,7 +14,7 @@ nonce = generate_token()
 
 
 oauth.register(
-    name=os.getenv('OIDC_CLIENT_NAME'),
+    name='flask_app',
     client_id=os.getenv('OIDC_CLIENT_ID'),
     client_secret=os.getenv('OIDC_CLIENT_SECRET'),
     #server_metadata_url='http://dex:5556/.well-known/openid-configuration',

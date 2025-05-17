@@ -2,9 +2,7 @@
     let logged_in = $state(false);
 
     async function onLoginPressed() {
-        const res = await fetch("/login");
-        const res_data = await res.json();
-        console.log(res_data);
+        const res = await fetch("http://localhost:8000/login");
         logged_in = true;
     }
 </script>
