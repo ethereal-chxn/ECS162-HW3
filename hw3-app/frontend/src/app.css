@@ -134,7 +134,7 @@
   #curr-date {
     font-size: 16px;
   }
-  
+
   .articles-section {
     grid-template-columns: repeat(3, 1fr);
   }

@@ -91,6 +91,5 @@
       <Column articles={articles.slice(2, 4)} />
       <Column articles={articles.slice(4, 6)} />
     </section>
-    <CommentSection />
   </main>
 </main>
