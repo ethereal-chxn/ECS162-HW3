@@ -56,5 +56,26 @@ def logout():
     session.clear()
     return redirect('/')
 
+# Get all the comments in the database
+@app.route("/api/commments", method=['GET'])
+def get_comments():
+    return jsonify(db["comments"])
+
+# Adds a comment to database 
+@app.route("/api/comments", method=['POST'])
+def post_comment():
+    pass
+
+# Edits comment to say it is deleted
+@app.route("/api/comments/<id>", method=['DELETE'])
+def delete_comment():
+    pass
+
+# Adds reply to comment (PUT)
+@app.route("/api/comments/<id>", method=['PUT'])
+def put_reply_in_comment():
+    pass
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8000)
