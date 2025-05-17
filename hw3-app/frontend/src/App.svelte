@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import Column from "./components/Column.svelte";
   import CommentSection from "./components/CommentSection.svelte";
+  import AccountButton from "./components/AccountButton.svelte";
 
   let apiKey = "";
   let url = "";
@@ -82,6 +83,7 @@
           ", " +
           currDate.getFullYear()}
       </p>
+      <AccountButton/>
     </section>
   </header>
 
