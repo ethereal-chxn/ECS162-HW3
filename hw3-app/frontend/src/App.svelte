@@ -7,11 +7,17 @@
   let apiKey = $state("");
   let url = $state("");
   let articles: any[] = $state([]);
+  let currArticleDisplayed = $state(-1)
   let isShowingComments = $state(false);
   let isLoggedIn = $state(false);
 
-  function toggleCommentsTab() {
-    isShowingComments = !isShowingComments
+  function onCommentsButtonPressed(articleId: number) {
+    isShowingComments = true;
+    currArticleDisplayed = articleId;
+  }
+
+  function onCloseCommentsPressed() {
+    isShowingComments = false;
   }
 
   async function onLoginPressed() {
@@ -75,9 +81,12 @@
   let currDay = days[currDate.getDay()];
 </script>
 
+{#if isShowingComments}
 <div class="sidebar" style="width:25%;right:0">
-  <CommentSection articleId={2}/>
+  <CommentSection articleId={2} onClickHandler={onCloseCommentsPressed}/>
 </div>
+{/if}
+
 <header>
   <section class="header-section">
     <!--
@@ -110,8 +119,8 @@
 
 <main>
   <section class="articles-section">
-    <Column articles={articles.slice(0, 2)} />
-    <Column articles={articles.slice(2, 4)} />
-    <Column articles={articles.slice(4, 6)} />
+    <Column articles={articles.slice(0, 2)} clickHandler={onCommentsButtonPressed}/>
+    <Column articles={articles.slice(2, 4)} clickHandler={onCommentsButtonPressed}/>
+    <Column articles={articles.slice(4, 6)} clickHandler={onCommentsButtonPressed}/>
   </section>
 </main>
