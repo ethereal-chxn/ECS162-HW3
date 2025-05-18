@@ -1,16 +1,20 @@
-from flask import Flask, redirect, url_for, session, jsonify
+from flask import Flask, redirect, url_for, session, jsonify, request
+from flask_cors import CORS
 from authlib.integrations.flask_client import OAuth
 from authlib.common.security import generate_token
 from pymongo import MongoClient
 import os
 
 app = Flask(__name__)
+CORS(app)
 app.secret_key = os.urandom(24)
+
 
 
 oauth = OAuth(app)
 
 nonce = generate_token()
+
 
 
 oauth.register(
@@ -28,7 +32,8 @@ oauth.register(
 
 mongo_uri = os.getenv("MONGO_URI")
 mongo = MongoClient(mongo_uri)
-db = mongo.get_default_database()
+db = mongo["mydatabase"]
+comments_collection = db["comments"]
 
 @app.route('/')
 def home():
@@ -62,15 +67,30 @@ def logout():
     session.clear()
     return redirect('/')
 
-#Get all the comments in the database
-@app.route("/api/commments", methods=['GET'])
+# Get all the comments in the database
+@app.route("/api/comments", methods=['GET'])
 def get_comments():
-    return jsonify(db["comments"])
+    comments = list(comments_collection.find())
+    for comment in comments:
+        comment['_id'] = str(comment['_id'])
+    return jsonify(comments)
+
+# Get all comments under specified article
+@app.route("/api/comments/article/<int:article_id>", methods=['GET'])
+def get_comment_article(article_id):
+    # comments_in_article = list(comments.find({"articleId": article_id}))
+    comments_in_article = list(comments_collection.find())
+    # print(comments_in_article)
+    for comment in comments_in_article:
+        comment['_id'] = str(comment['_id'])
+    return jsonify({'comments': comments_in_article})
 
 # Adds a comment to database 
 @app.route("/api/comments", methods=['POST'])
 def post_comment():
-    pass
+    commentData = request.get_json()
+    result = comments_collection.insert_one(commentData)
+    return jsonify({"inserted_id": str(result.inserted_id)})
 
 # Edits comment to say it is deleted
 @app.route("/api/comments/<id>", methods=['DELETE'])

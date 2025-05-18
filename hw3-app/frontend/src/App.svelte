@@ -8,21 +8,37 @@
   let url = $state("");
   let articles: any[] = $state([]);
   let currArticleDisplayed = $state(-1)
+  let currCommentsDisplayed = $state({});
   let isShowingComments = $state(false);
   let isLoggedIn = $state(false);
 
-  function onCommentsButtonPressed(articleId: number) {
+  /* Event Listeners */
+  // Pressing the comments button on an article
+  async function onCommentsButtonPressed(articleId: number) {
+    // Open sidebar
     isShowingComments = true;
     currArticleDisplayed = articleId;
+
+    // Display comments for article
+    const commentsInArticle = await retrieveCommentsInArticle(articleId);
+    currCommentsDisplayed = commentsInArticle;
   }
 
+  // Pressing the X buttton on the comments sidebar closes the sidebar
   function onCloseCommentsPressed() {
     isShowingComments = false;
   }
-
+  
+  // Pressing the LOG IN button brings user to dex sign-in
   async function onLoginPressed() {
     window.location.href = "http://localhost:8000/login";
     isLoggedIn = true;
+  }
+
+  async function retrieveCommentsInArticle(articleId: number) {
+    const commentsInArticle = await fetch(`http://localhost:8000/api/comments/article/${articleId}`);
+    console.log(commentsInArticle);
+    return commentsInArticle;
   }
 
   onMount(async () => {
@@ -81,9 +97,14 @@
   let currDay = days[currDate.getDay()];
 </script>
 
+
 {#if isShowingComments}
 <div class="sidebar" style="width:25%;right:0">
-  <CommentSection articleId={2} onClickHandler={onCloseCommentsPressed}/>
+  <CommentSection 
+    articleId={currArticleDisplayed} 
+    onClickHandler={onCloseCommentsPressed} 
+    comments={currCommentsDisplayed}
+  />
 </div>
 {/if}
 
@@ -119,8 +140,8 @@
 
 <main>
   <section class="articles-section">
-    <Column articles={articles.slice(0, 2)} clickHandler={onCommentsButtonPressed}/>
-    <Column articles={articles.slice(2, 4)} clickHandler={onCommentsButtonPressed}/>
-    <Column articles={articles.slice(4, 6)} clickHandler={onCommentsButtonPressed}/>
+    <Column articles={articles.slice(0, 2)} idList={[0, 1]} clickHandler={onCommentsButtonPressed}/>
+    <Column articles={articles.slice(2, 4)} idList={[2, 3]} clickHandler={onCommentsButtonPressed}/>
+    <Column articles={articles.slice(4, 6)} idList={[4, 5]} clickHandler={onCommentsButtonPressed}/>
   </section>
 </main>
