@@ -75,42 +75,43 @@
   let currDay = days[currDate.getDay()];
 </script>
 
-<main>
-  <header>
-    <section class="header-section">
-      <!--
-      Webpage Title
-      -->
-      <h1>The New York Times</h1>
-      <!--
-      Dynamic Current Date Display
-      -->
-      <div id="date-and-account">
-        <p id="curr-date">
-          {currDay +
-            ", " +
-            currMonth +
-            " " +
-            currDate.getDate() +
-            ", " +
-            currDate.getFullYear()}
-        </p>
-        <div id="account">
-          {#if isLoggedIn}
-            <p>Account</p>
-          {:else}
-            <AccountButton clickHandler={onLoginPressed}/>
-          {/if}
-      </div>
+<div class="sidebar" style="width:25%;right:0">
+  <CommentSection articleId={2}/>
+</div>
+<header>
+  <section class="header-section">
+    <!--
+    Webpage Title
+    -->
+    <h1>The New York Times</h1>
+    <!--
+    Dynamic Current Date Display
+    -->
+    <div id="date-and-account">
+      <p id="curr-date">
+        {currDay +
+          ", " +
+          currMonth +
+          " " +
+          currDate.getDate() +
+          ", " +
+          currDate.getFullYear()}
+      </p>
+      <div id="account">
+        {#if isLoggedIn}
+          <p>Account</p>
+        {:else}
+          <AccountButton clickHandler={onLoginPressed}/>
+        {/if}
     </div>
-    </section>
-  </header>
+  </div>
+  </section>
+</header>
 
-  <main>
-    <section class="articles-section">
-      <Column articles={articles.slice(0, 2)} />
-      <Column articles={articles.slice(2, 4)} />
-      <Column articles={articles.slice(4, 6)} />
-    </section>
-  </main>
+<main>
+  <section class="articles-section">
+    <Column articles={articles.slice(0, 2)} />
+    <Column articles={articles.slice(2, 4)} />
+    <Column articles={articles.slice(4, 6)} />
+  </section>
 </main>

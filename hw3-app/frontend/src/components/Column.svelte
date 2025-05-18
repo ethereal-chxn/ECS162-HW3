@@ -5,7 +5,7 @@
 </script>
 
 <section class="column">
-  {#each articles as article}
-    <Article articleInfo={article} />
+  {#each articles as article, i}
+    <Article articleInfo={article} id={i}/>
   {/each}
 </section>

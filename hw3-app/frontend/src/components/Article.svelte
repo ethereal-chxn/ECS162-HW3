@@ -1,5 +1,6 @@
 <script lang="js">
-  let { articleInfo } = $props();
+  import CommentsButton from "./CommentsButton.svelte";
+  let { articleInfo, id } = $props();
 </script>
 
 <article>
@@ -12,5 +13,5 @@
   />
   <!-- Extract article tagline from JSON object -->
   <p>{articleInfo.abstract}</p>
-  <!-- <button></button> -->
+  <CommentsButton id={id}/>
 </article>

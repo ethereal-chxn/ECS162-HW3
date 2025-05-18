@@ -1,15 +1,16 @@
 <script>
     let inCommentForm = $state(false);
+    let articleId = $props();
 
-    function postComment() {
+    function postComment(articleId) {
         let params = new FormData(id("comment-form"));
-        params.append()
+        params.append("article_id", articleId);
     }
 
-    function onCommentSubmit() {
+    function onCommentSubmit(articleId) {
         id("comment-form").addEventListener("submit", function(e) {
             e.preventDefault();
-            postComment();
+            postComment(articleId);
         })
     }
 
@@ -23,10 +24,10 @@
 </script>
 
 <form id="comment-form">
-    Comment Body: <input name="comment-body" type="text" placeholder="Share your thoughts" on:click={onTextBoxClick}>
+    <input name="comment_body" type="text" placeholder="Share your thoughts" on:click={onTextBoxClick}>
 
     {#if inCommentForm}
         <button id="cancel-btn" on:click={onCancelBtnClicked} type="reset">CANCEL</button>
-        <button id="submit-btn" on:click={onCommentSubmit}>SUBMIT</button>
+        <button id="submit-btn" on:click={onCommentSubmit, articleId}>SUBMIT</button>
     {/if}
 </form>
