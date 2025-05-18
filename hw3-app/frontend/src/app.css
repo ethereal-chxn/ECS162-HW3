@@ -32,14 +32,25 @@
 }
 
 #date-and-account {
-  display:flex;
+  display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
 }
 
 #curr-date {
   font-family: "Helvetica Neue";
   font-weight: bold;
-  color: black;
+  color: #111111;
+}
+
+#account button {
+  font-family: "Helvetica Neue";
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #688bad;
+  border: none;
+  padding: 7px
 }
 
 /* For article and column formatting */
@@ -82,7 +93,7 @@
 
 /* Mobile View */
 @media only screen and (max-width: 768px) {
-  #curr-date {
+  #curr-date, #account {
     font-size: 12px;
   }
 
@@ -105,7 +116,7 @@
 
 /* Tablet View */
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
-  #curr-date {
+  #curr-date, #account {
     font-size: 14px;
   }
 
@@ -131,7 +142,7 @@
 
 /* Desktop View */
 @media only screen and (min-width: 1024px) {
-  #curr-date {
+  #curr-date, #account {
     font-size: 16px;
   }
 
