@@ -15,7 +15,17 @@
         // https://stackoverflow.com/questions/41431322/how-to-convert-formdata-html5-object-to-json
         let params_json = {}
 
-        params.forEach((value, key) => params_json[key] = value);
+        
+        params.forEach((value, key) => {
+            // Conversion to number written with help from this StackOverflow page:
+            //https://stackoverflow.com/questions/12862624/whats-the-fastest-way-to-convert-string-to-number-in-javascript
+            if (key == "articleId") {
+                params_json[key] = Number(value);
+            }
+            else {
+                params_json[key] = value;
+            }
+        });
 
         const response = await fetch("http://localhost:8000/api/comments", 
             {
