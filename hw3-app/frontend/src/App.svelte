@@ -18,7 +18,6 @@
 
 
   /* Event Listeners */
-
   
   // Pressing the comments button on an article
   async function retrieveCommentsInArticle(articleId: number) {
@@ -35,20 +34,22 @@
       isShowingComments = false;
     }
 
-    //Display comments for article
+    // Display comments for article
     const commentsInArticle = await retrieveCommentsInArticle(articleId);
     currCommentsDisplayed = commentsInArticle;
   }
 
-  // Pressing the X buttton on the comments sidebar closes the sidebar
+  // Pressing the x buttton on the comments sidebar closes the sidebar
   function onCloseCommentsPressed() {
     isShowingComments = false;
   }
 
+  // Open account tab
   function onAccountTabPressed() {
     isShowingAccountTab = true;
   }
 
+  // Close account tab
   function onCloseAccountTabPressed() {
     isShowingAccountTab = false;
   }
@@ -63,10 +64,12 @@
   }
 
   onMount(async () => {
+    // Verify user is logged in
     const newUrl = new URL(window.location.href);
     userEmail = newUrl.searchParams.get('user');
     console.log('Logged in user:', userEmail);
 
+    // Classify user for privileges
     if (userEmail) {
       isLoggedIn = true;
       setContext("userEmail", userEmail);
@@ -130,7 +133,7 @@
   let currDay = days[currDate.getDay()];
 </script>
 
-
+<!-- Comments Sidebar -->
 {#if isShowingComments}
 <div class="sidebar" style="width:35%;right:0">
   <CommentSection 
@@ -142,6 +145,7 @@
 </div>
 {/if}
 
+<!-- Account Sidebar -->
 {#if isShowingAccountTab}
 <div class="sidebar" style="width:35%;right:0">
     <AccountTab onExitClick={onCloseAccountTabPressed} onLogoutClick={onLogoutPressed}/>
