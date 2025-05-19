@@ -3,7 +3,6 @@
   import Comment from "./Comment.svelte";
   
   let {articleId, onClickHandler, comments} = $props();
-  // console.log($state.snapshot(comments));
 </script>
 
 <section class="comment-section">
@@ -15,7 +14,7 @@
 
   <CommentBox articleId={articleId}/>
 
-  {#each comments as comment}
+  {#each comments["comments"] as comment}
     <Comment 
       author={comment["author"]} 
       commentBody={comment["commentBody"]}

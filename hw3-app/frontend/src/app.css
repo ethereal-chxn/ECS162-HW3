@@ -112,7 +112,8 @@
 
 /* Mobile View */
 @media only screen and (max-width: 768px) {
-  #curr-date, #account {
+  #curr-date,
+  #account {
     font-size: 12px;
   }
 
@@ -135,7 +136,8 @@
 
 /* Tablet View */
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
-  #curr-date, #account {
+  #curr-date,
+  #account {
     font-size: 14px;
   }
 
@@ -161,7 +163,8 @@
 
 /* Desktop View */
 @media only screen and (min-width: 1024px) {
-  #curr-date, #account {
+  #curr-date,
+  #account {
     font-size: 16px;
   }
 
@@ -208,4 +211,16 @@ p {
   font-family: "Times New Roman";
   color: #5a5a5a;
   width: 80%;
+}
+
+.comment h2 {
+  font-family: "Helvetica Neue";
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.comment p {
+  font-family: "Helvetica Neue";
+  font-weight: normal;
+  font-size: 14px;
 }

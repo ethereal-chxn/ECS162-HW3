@@ -1,9 +1,9 @@
-<script>
+<script lang="js">
     let inCommentForm = $state(false);
     let { articleId } = $props();
 
     async function postComment(articleId) {
-        form = document.getElementById("comment-form");
+        let form = document.getElementById("comment-form");
         console.log(form);
         let params = new FormData(form);
         params.append("articleId", articleId);
@@ -15,7 +15,7 @@
         // https://stackoverflow.com/questions/41431322/how-to-convert-formdata-html5-object-to-json
         let params_json = {}
 
-        params.forEach((value, key) => object[key] = value);
+        params.forEach((value, key) => params_json[key] = value);
 
         const response = await fetch("http://localhost:8000/api/comments", 
             {

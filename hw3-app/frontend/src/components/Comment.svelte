@@ -2,7 +2,7 @@
     let { author, commentBody } = $props()
 </script>
 
-<article>
+<div class="comment">
     <h2>{author}</h2>
     <p>{commentBody}</p>
-</article>
+</div>

@@ -13,7 +13,14 @@
   let isLoggedIn = $state(false);
 
   /* Event Listeners */
+
+  
   // Pressing the comments button on an article
+  async function retrieveCommentsInArticle(articleId: number) {
+    const commentsInArticle = await fetch(`http://localhost:8000/api/comments/article/${articleId}`);
+    return commentsInArticle.json();
+  }
+
   async function onCommentsButtonPressed(articleId: number) {
     // Open sidebar
     isShowingComments = true;
@@ -22,6 +29,7 @@
     // Display comments for article
     const commentsInArticle = await retrieveCommentsInArticle(articleId);
     currCommentsDisplayed = commentsInArticle;
+    console.log($state.snapshot(currCommentsDisplayed));
   }
 
   // Pressing the X buttton on the comments sidebar closes the sidebar
@@ -35,11 +43,7 @@
     isLoggedIn = true;
   }
 
-  async function retrieveCommentsInArticle(articleId: number) {
-    const commentsInArticle = await fetch(`http://localhost:8000/api/comments/article/${articleId}`);
-    console.log(commentsInArticle);
-    return commentsInArticle;
-  }
+
 
   onMount(async () => {
     try {

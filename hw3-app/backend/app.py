@@ -78,8 +78,8 @@ def get_comments():
 # Get all comments under specified article
 @app.route("/api/comments/article/<int:article_id>", methods=['GET'])
 def get_comment_article(article_id):
-    # comments_in_article = list(comments.find({"articleId": article_id}))
-    comments_in_article = list(comments_collection.find())
+    comments_in_article = list(comments_collection.find({"articleId": article_id}))
+    # comments_in_article = list(comments_collection.find())
     # print(comments_in_article)
     for comment in comments_in_article:
         comment['_id'] = str(comment['_id'])
