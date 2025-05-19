@@ -213,6 +213,15 @@ p {
   width: 80%;
 }
 
+#comment-form {
+  margin-bottom: 5px;
+}
+
+.comment {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #dfdfdf;
+}
+
 .comment h2 {
   font-family: "Helvetica Neue";
   font-weight: bold;

@@ -22,9 +22,14 @@
   }
 
   async function onCommentsButtonPressed(articleId: number) {
-    // Open sidebar
-    isShowingComments = true;
-    currArticleDisplayed = articleId;
+    if (!isShowingComments) {
+      // Open sidebar if not already
+      isShowingComments = true;
+      currArticleDisplayed = articleId;
+    } else {
+      isShowingComments = false;
+    }
+
 
     // Display comments for article
     const commentsInArticle = await retrieveCommentsInArticle(articleId);
