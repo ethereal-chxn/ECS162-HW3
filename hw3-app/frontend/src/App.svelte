@@ -1,23 +1,93 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onMount, setContext } from "svelte";
   import Column from "./components/Column.svelte";
+  import CommentSection from "./components/CommentSection.svelte";
+  import AccountButton from "./components/AccountButton.svelte";
+  import AccountTab from "./components/AccountTab.svelte";
 
-  let apiKey = "";
-  let url = "";
-  let articles: any[] = [];
+  let apiKey = $state("");
+  let url = $state("");
+  let articles: any[] = $state([]);
+  let currArticleDisplayed = $state(-1)
+  let currCommentsDisplayed = $state({});
+  let isShowingComments = $state(false);
+  let isShowingAccountTab = $state(false);
+  let isLoggedIn = $state(false);
+  let isModerator = $state(false);
+  let userEmail = $state("");
+
+
+  /* Event Listeners */
+  
+  // Pressing the comments button on an article
+  async function retrieveCommentsInArticle(articleId: number) {
+    const commentsInArticle = await fetch(`http://localhost:8000/api/comments/article/${articleId}`);
+    return commentsInArticle.json();
+  }
+
+  async function onCommentsButtonPressed(articleId: number) {
+    if (!isShowingComments && isLoggedIn) {
+      // Open sidebar if not already
+      isShowingComments = true;
+      currArticleDisplayed = articleId;
+    } else {
+      isShowingComments = false;
+    }
+
+    // Display comments for article
+    const commentsInArticle = await retrieveCommentsInArticle(articleId);
+    currCommentsDisplayed = commentsInArticle;
+  }
+
+  // Pressing the x buttton on the comments sidebar closes the sidebar
+  function onCloseCommentsPressed() {
+    isShowingComments = false;
+  }
+
+  // Open account tab
+  function onAccountTabPressed() {
+    isShowingAccountTab = true;
+  }
+
+  // Close account tab
+  function onCloseAccountTabPressed() {
+    isShowingAccountTab = false;
+  }
+  
+  // Pressing the LOG IN button brings user to dex sign-in
+  async function onLoginPressed() {
+    window.location.href = "http://localhost:8000/login";
+  }
+
+  async function onLogoutPressed() {
+    window.location.href = "http://localhost:8000/logout"
+  }
 
   onMount(async () => {
+    // Verify user is logged in
+    const newUrl = new URL(window.location.href);
+    userEmail = newUrl.searchParams.get('user');
+    console.log('Logged in user:', userEmail);
+
+    // Classify user for privileges
+    if (userEmail) {
+      isLoggedIn = true;
+      setContext("userEmail", userEmail);
+      if (userEmail == "moderator@hw3.com") {
+        isModerator = true;
+      }
+    }
+
     try {
       const res = await fetch("/api/key");
       const data = await res.json();
       apiKey = data.apiKey;
-      console.log(apiKey);
       url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=(Sacramento,Davis)%sort=newest&api-key=${apiKey}`;
     } catch (error) {
       console.error("Failed to fetch API key:", error);
     }
 
-    fetch(url)
+    await fetch(url)
       .then((response) => response.json())
       .then((data) => {
         // console.log(data);
@@ -63,16 +133,35 @@
   let currDay = days[currDate.getDay()];
 </script>
 
-<main>
-  <header>
-    <section class="header-section">
-      <!--
-      Webpage Title
-      -->
-      <h1>The New York Times</h1>
-      <!--
-      Dynamic Current Date Display
-      -->
+<!-- Comments Sidebar -->
+{#if isShowingComments}
+<div class="sidebar" style="width:35%;right:0">
+  <CommentSection 
+    articleId={currArticleDisplayed}
+    comments={currCommentsDisplayed}
+    onClickHandler={onCloseCommentsPressed} 
+    isModerator={isModerator}
+  />
+</div>
+{/if}
+
+<!-- Account Sidebar -->
+{#if isShowingAccountTab}
+<div class="sidebar" style="width:35%;right:0">
+    <AccountTab onExitClick={onCloseAccountTabPressed} onLogoutClick={onLogoutPressed}/>
+</div>
+{/if}
+
+<header>
+  <section class="header-section">
+    <!--
+    Webpage Title
+    -->
+    <h1>The New York Times</h1>
+    <!--
+    Dynamic Current Date Display
+    -->
+    <div id="date-and-account">
       <p id="curr-date">
         {currDay +
           ", " +
@@ -82,12 +171,21 @@
           ", " +
           currDate.getFullYear()}
       </p>
-    </section>
-  </header>
+      <div id="account">
+        {#if isLoggedIn}
+          <button onclick={onAccountTabPressed}>Account</button>
+        {:else}
+          <AccountButton clickHandler={onLoginPressed}/>
+        {/if}
+    </div>
+  </div>
+  </section>
+</header>
 
-  <main class="articles-section">
-    <Column articles={articles.slice(0, 2)} />
-    <Column articles={articles.slice(2, 4)} />
-    <Column articles={articles.slice(4, 6)} />
-  </main>
+<main>
+  <section class="articles-section">
+    <Column articles={articles.slice(0, 2)} idList={[0, 1]} clickHandler={onCommentsButtonPressed}/>
+    <Column articles={articles.slice(2, 4)} idList={[2, 3]} clickHandler={onCommentsButtonPressed}/>
+    <Column articles={articles.slice(4, 6)} idList={[4, 5]} clickHandler={onCommentsButtonPressed}/>
+  </section>
 </main>

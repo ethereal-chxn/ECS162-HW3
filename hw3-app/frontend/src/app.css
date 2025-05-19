@@ -31,15 +31,52 @@
   flex-direction: column;
 }
 
-.curr-date-section {
+#date-and-account {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
 }
 
 #curr-date {
   font-family: "Helvetica Neue";
   font-weight: bold;
-  color: black;
+  color: #111111;
+}
+
+#account button {
+  font-family: "Helvetica Neue";
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #688bad;
+  border: none;
+  padding: 7px;
+  border-radius: 4px;
+}
+
+#cancel-btn {
+  font-family: "Helvetica Neue";
+  font-weight: bold;
+  font-size: 10px;
+  border: none;
+  padding: 3px;
+  border-radius: 4px;
+}
+
+#submit-btn {
+  font-family: "Helvetica Neue";
+  font-weight: bold;
+  font-size: 10px;
+  color: #ffffff;
+  background-color: #688bad;
+  border: none;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+#delete-button {
+  border: none;
+  border-radius: 4px;
 }
 
 /* For article and column formatting */
@@ -71,9 +108,54 @@
   border: none;
 }
 
+.comment-section {
+  padding-inline: 30px;
+  padding-block: 20px;
+}
+
+.account-tab {
+  padding-inline: 30px;
+  padding-block: 20px;
+}
+
+#log-out-button {
+  border: none;
+  border-radius: 4px;
+}
+
+.sidebar {
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  height: 100%;
+  text-align: left;
+  background-color: #ffffff;
+}
+
+.comment-section h2 {
+  font-family: "Helvetica Neue";
+}
+
+#comment-button {
+  width: 40px;
+  border: none;
+  border-radius: 4px;
+}
+
+.exit-button {
+  border: none;
+  border-radius: 4px;
+}
+
+#comment-icon {
+  height: auto;
+  max-width: 40px;
+}
+
 /* Mobile View */
 @media only screen and (max-width: 768px) {
-  #curr-date {
+  #curr-date,
+  #account {
     font-size: 12px;
   }
 
@@ -96,7 +178,8 @@
 
 /* Tablet View */
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
-  #curr-date {
+  #curr-date,
+  #account {
     font-size: 14px;
   }
 
@@ -122,10 +205,11 @@
 
 /* Desktop View */
 @media only screen and (min-width: 1024px) {
-  #curr-date {
+  #curr-date,
+  #account {
     font-size: 16px;
   }
-  
+
   .articles-section {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -169,4 +253,25 @@ p {
   font-family: "Times New Roman";
   color: #5a5a5a;
   width: 80%;
+}
+
+#comment-form {
+  margin-bottom: 5px;
+}
+
+.comment {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.comment h2 {
+  font-family: "Helvetica Neue";
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.comment p {
+  font-family: "Helvetica Neue";
+  font-weight: normal;
+  font-size: 14px;
 }

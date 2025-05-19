@@ -1,11 +1,11 @@
-<script lang="ts">
+<script lang="js">
   import Article from "./Article.svelte";
 
-  let { articles } = $props();
+  let { articles, idList, clickHandler } = $props();
 </script>
 
 <section class="column">
-  {#each articles as article}
-    <Article articleInfo={article} />
+  {#each articles as article, i}
+    <Article articleInfo={article} id={idList[i]} clickHandler={clickHandler}/>
   {/each}
 </section>
