@@ -35,11 +35,9 @@
       isShowingComments = false;
     }
 
-
-    // Display comments for article
+    //Display comments for article
     const commentsInArticle = await retrieveCommentsInArticle(articleId);
     currCommentsDisplayed = commentsInArticle;
-    console.log($state.snapshot(currCommentsDisplayed));
   }
 
   // Pressing the X buttton on the comments sidebar closes the sidebar
@@ -136,9 +134,9 @@
 {#if isShowingComments}
 <div class="sidebar" style="width:35%;right:0">
   <CommentSection 
-    articleId={currArticleDisplayed} 
-    onClickHandler={onCloseCommentsPressed} 
+    articleId={currArticleDisplayed}
     comments={currCommentsDisplayed}
+    onClickHandler={onCloseCommentsPressed} 
     isModerator={isModerator}
   />
 </div>

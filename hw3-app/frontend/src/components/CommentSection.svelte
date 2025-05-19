@@ -1,9 +1,8 @@
 <script lang="js">
-  import { onMount } from "svelte";
   import CommentBox from "./CommentBox.svelte";
   import Comment from "./Comment.svelte";
 
-  let {articleId, onClickHandler, comments, isModerator} = $props();
+  let {articleId, comments, onClickHandler, isModerator} = $props();
 </script>
 
 <section class="comment-section">

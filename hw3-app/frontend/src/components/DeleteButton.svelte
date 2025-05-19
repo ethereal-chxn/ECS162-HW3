@@ -4,6 +4,7 @@
     async function deleteComment(id) {
         const res = await fetch(`http://localhost:8000/api/comments/${id}`, {method: "DELETE", mode: "cors"});
         console.log(await res.json());
+        window.location.reload();
     }
 
 </script>

@@ -54,6 +54,26 @@
   border-radius: 4px;
 }
 
+#cancel-btn {
+  font-family: "Helvetica Neue";
+  font-weight: bold;
+  font-size: 10px;
+  border: none;
+  padding: 3px;
+  border-radius: 4px;
+}
+
+#submit-btn {
+  font-family: "Helvetica Neue";
+  font-weight: bold;
+  font-size: 10px;
+  color: #ffffff;
+  background-color: #688bad;
+  border: none;
+  padding: 4px;
+  border-radius: 4px;
+}
+
 /* For article and column formatting */
 .articles-section {
   display: grid;

@@ -40,6 +40,7 @@
             }
         );
         console.log(await response.json());
+        window.location.reload();
     }
 
     function onCommentSubmit(articleId) {
