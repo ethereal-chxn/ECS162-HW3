@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onMount, setContext } from "svelte";
   import Column from "./components/Column.svelte";
   import CommentSection from "./components/CommentSection.svelte";
   import AccountButton from "./components/AccountButton.svelte";
+  import AccountTab from "./components/AccountTab.svelte";
 
   let apiKey = $state("");
   let url = $state("");
@@ -10,7 +11,11 @@
   let currArticleDisplayed = $state(-1)
   let currCommentsDisplayed = $state({});
   let isShowingComments = $state(false);
+  let isShowingAccountTab = $state(false);
   let isLoggedIn = $state(false);
+  let isModerator = $state(false);
+  let userEmail = $state("");
+
 
   /* Event Listeners */
 
@@ -22,7 +27,7 @@
   }
 
   async function onCommentsButtonPressed(articleId: number) {
-    if (!isShowingComments) {
+    if (!isShowingComments && isLoggedIn) {
       // Open sidebar if not already
       isShowingComments = true;
       currArticleDisplayed = articleId;
@@ -41,16 +46,37 @@
   function onCloseCommentsPressed() {
     isShowingComments = false;
   }
+
+  function onAccountTabPressed() {
+    isShowingAccountTab = true;
+  }
+
+  function onCloseAccountTabPressed() {
+    isShowingAccountTab = false;
+  }
   
   // Pressing the LOG IN button brings user to dex sign-in
   async function onLoginPressed() {
     window.location.href = "http://localhost:8000/login";
-    isLoggedIn = true;
   }
 
-
+  async function onLogoutPressed() {
+    window.location.href = "http://localhost:8000/logout"
+  }
 
   onMount(async () => {
+    const newUrl = new URL(window.location.href);
+    userEmail = newUrl.searchParams.get('user');
+    console.log('Logged in user:', userEmail);
+
+    if (userEmail) {
+      isLoggedIn = true;
+      setContext("userEmail", userEmail);
+      if (userEmail == "moderator@hw3.com") {
+        isModerator = true;
+      }
+    }
+
     try {
       const res = await fetch("/api/key");
       const data = await res.json();
@@ -108,12 +134,19 @@
 
 
 {#if isShowingComments}
-<div class="sidebar" style="width:25%;right:0">
+<div class="sidebar" style="width:35%;right:0">
   <CommentSection 
     articleId={currArticleDisplayed} 
     onClickHandler={onCloseCommentsPressed} 
     comments={currCommentsDisplayed}
+    isModerator={isModerator}
   />
+</div>
+{/if}
+
+{#if isShowingAccountTab}
+<div class="sidebar" style="width:35%;right:0">
+    <AccountTab onExitClick={onCloseAccountTabPressed} onLogoutClick={onLogoutPressed}/>
 </div>
 {/if}
 
@@ -138,7 +171,7 @@
       </p>
       <div id="account">
         {#if isLoggedIn}
-          <p>Account</p>
+          <button onclick={onAccountTabPressed}>Account</button>
         {:else}
           <AccountButton clickHandler={onLoginPressed}/>
         {/if}

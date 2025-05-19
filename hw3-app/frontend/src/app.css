@@ -84,8 +84,18 @@
 }
 
 .comment-section {
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-inline: 30px;
+  padding-block: 20px;
+}
+
+.account-tab {
+  padding-inline: 30px;
+  padding-block: 20px;
+}
+
+#log-out-button {
+  border: none;
+  border-radius: 4px;
 }
 
 .sidebar {
@@ -103,6 +113,13 @@
 
 #comment-button {
   width: 40px;
+  border: none;
+  border-radius: 4px;
+}
+
+.exit-button {
+  border: none;
+  border-radius: 4px;
 }
 
 #comment-icon {

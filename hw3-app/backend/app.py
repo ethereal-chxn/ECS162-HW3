@@ -3,6 +3,7 @@ from flask_cors import CORS
 from authlib.integrations.flask_client import OAuth
 from authlib.common.security import generate_token
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 import os
 
 app = Flask(__name__)
@@ -62,10 +63,14 @@ def authorize():
     # From dicussion
     return redirect(f"http://localhost:5173/login?user={user_info['email']}")
 
+@app.route('/get_user')
+def get_user():
+    return jsonify({'userInfo': session.get('user')})
+
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect('/')
+    return redirect('http://localhost:5173')
 
 # Get all the comments in the database
 @app.route("/api/comments", methods=['GET'])
@@ -93,9 +98,12 @@ def post_comment():
     return jsonify({"inserted_id": str(result.inserted_id)})
 
 # Edits comment to say it is deleted
-@app.route("/api/comments/<id>", methods=['DELETE'])
-def delete_comment():
-    pass
+@app.route("/api/comments/<comment_id>", methods=['DELETE'])
+def delete_comment(comment_id):
+    query = {'_id': ObjectId(comment_id)}
+    result = comments_collection.update_one(query, {"$set": {'commentBody': "COMMENT REMOVED BY MODERATOR!"}})
+    modifiedComment = comments_collection.find_one({"_id": ObjectId(comment_id)})
+    return jsonify({"modifiedComment": list(modifiedComment)})
 
 # Adds reply to comment (PUT)
 @app.route("/api/comments/<id>", methods=['PUT'])

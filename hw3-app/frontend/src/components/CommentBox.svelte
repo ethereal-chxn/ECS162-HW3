@@ -1,13 +1,15 @@
 <script lang="js">
+    import { getContext } from "svelte";
     let inCommentForm = $state(false);
     let { articleId } = $props();
 
+    const user = getContext("userEmail");
     async function postComment(articleId) {
         let form = document.getElementById("comment-form");
         console.log(form);
         let params = new FormData(form);
         params.append("articleId", articleId);
-        params.append("author", "user")
+        params.append("author", user);
 
         console.log(params)
 
@@ -18,7 +20,7 @@
         
         params.forEach((value, key) => {
             // Conversion to number written with help from this StackOverflow page:
-            //https://stackoverflow.com/questions/12862624/whats-the-fastest-way-to-convert-string-to-number-in-javascript
+            // https://stackoverflow.com/questions/12862624/whats-the-fastest-way-to-convert-string-to-number-in-javascript
             if (key == "articleId") {
                 params_json[key] = Number(value);
             }
